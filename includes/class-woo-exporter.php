@@ -155,7 +155,7 @@ class Woo_Exporter {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Woo_Exporter_Admin( $this->get_plugin_name(), $this->get_version() );
-		$dynamo = new Woo_Aws_DynamoDB();
+		$dynamo = new Woo_Aws_DynamoDB(AWS_KEY, AWS_SECRET, 'eu-south-1');
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );

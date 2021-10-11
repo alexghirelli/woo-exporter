@@ -19,12 +19,15 @@ services:
      ports:
        - "8200:80"
      volumes:
-       - ./woo-exporter:/var/www/html/wp-content/plugins/woo-exporter
+       - ./:/var/www/html/wp-content/plugins/woo-exporter
      restart: always
      environment:
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_USER: wordpress
        WORDPRESS_DB_PASSWORD: wordpress
        WORDPRESS_DB_NAME: wordpress
+       WORDPRESS_CONFIG_EXTRA: |
+        define('AWS_KEY', ${AWS_KEY} );
+        define('AWS_SECRET', ${AWS_SECRET});
 volumes:
   db_data: {}

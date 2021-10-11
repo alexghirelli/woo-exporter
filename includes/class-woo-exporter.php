@@ -57,6 +57,8 @@ class Woo_Exporter {
 	 */
 	protected $version;
 
+	protected $dynamo;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -125,6 +127,7 @@ class Woo_Exporter {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-aws-dynamo.php';
 
 		$this->loader = new Woo_Exporter_Loader();
+		$this->dynamo = new Woo_Aws_DynamoDB(AWS_KEY, AWS_SECRET, 'eu-south-1');
 
 	}
 
@@ -155,12 +158,14 @@ class Woo_Exporter {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Woo_Exporter_Admin( $this->get_plugin_name(), $this->get_version() );
-		$dynamo = new Woo_Aws_DynamoDB(AWS_KEY, AWS_SECRET, 'eu-south-1');
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'woocommerce_thankyou', $dynamo, 'insertData' );
-		$this->loader->add_action( 'woocommerce_update_order', $dynamo, 'updateData' );
+		$this->loader->add_action( 'woocommerce_thankyou', $this->dynamo, 'insertData' );
+		$this->loader->add_action( 'woocommerce_update_order', $this->dynamo, 'updateData' );
+
+		// Register Sidebars
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'custom_menu' );
 
 	}
 
@@ -187,6 +192,8 @@ class Woo_Exporter {
 	 */
 	public function run() {
 		$this->loader->run();
+
+		$this->loader->add_action( 'init', $this->dynamo, 'exportApi' );
 	}
 
 	/**

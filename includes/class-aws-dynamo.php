@@ -58,6 +58,8 @@ class Woo_Aws_DynamoDB {
         $this->insertData($orderId);
     }
 
+
+
     public function _remove($orderId) {
         
         $params = [
@@ -80,6 +82,36 @@ class Woo_Aws_DynamoDB {
         }
     }
 
+    public function getExportableOrders() {
+        $orders = [];
+        $eav = $this->marshaler->marshalJson('
+            {
+                ":yyyy-mm-dd": 2021-10-11 ,
+                ":status": on-hold
+            }
+        ');
+
+        $params = [
+            'TableName' => 'wc-orders',
+            'KeyConditionExpression' => '#dt = :yyyy-mm-dd and status = :status ',
+            'ExpressionAttributeNames'=> [ '#dt' => 'date' ],
+            'ExpressionAttributeValues'=> $eav
+        ];
+
+        try {
+            $result = $this->dynamodb->query($params);
+
+            foreach ($result['Items'] as $item) {
+                array_push($orders, $item);
+            }
+
+        } catch (DynamoDbException $e) {
+            echo "Unable to query:\n";
+            echo $e->getMessage() . "\n";
+        }
+
+        return $orders;
+    }
 
     private function _getOrderData($orderId) {
         $order = wc_get_order( $orderId );

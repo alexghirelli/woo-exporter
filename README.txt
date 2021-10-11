@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== WooExporter ===
 Contributors: (this should be a list of wordpress.org userid's)
 Donate link: https://www.alexghirelli.it
 Tags: comments, spam

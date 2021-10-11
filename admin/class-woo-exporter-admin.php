@@ -1,5 +1,7 @@
 <?php
 
+require 'partials/woo-exporter-admin-display.php';
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -98,6 +100,17 @@ class Woo_Exporter_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-exporter-admin.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	public function custom_menu() { 
+		add_menu_page( 
+			'WooCommerce Order Exporter', 
+			'WooExporter', 
+			'edit_posts', 
+			'woo-exporter', 
+			'adminPageContent', 
+			'dashicons-download'
+		);
 	}
 
 }

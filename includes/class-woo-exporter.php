@@ -161,12 +161,11 @@ class Woo_Exporter {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'woocommerce_thankyou', $this->dynamo, 'insertData' );
-		$this->loader->add_action( 'woocommerce_update_order', $this->dynamo, 'updateData' );
+		$this->loader->add_action( 'woocommerce_thankyou', $this->dynamo, 'insert' );
+		$this->loader->add_action( 'woocommerce_update_order', $this->dynamo, 'update' );
 
 		// Register Sidebars
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'custom_menu' );
-
 	}
 
 	/**

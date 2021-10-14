@@ -1,10 +1,5 @@
 <?php
 
-require plugin_dir_path( dirname( __FILE__ ) ) . '/vendor/autoload.php';
-
-use Aws\DynamoDb\Exception\DynamoDbException;
-use Aws\DynamoDb\Marshaler;
-
 /**
  * Fired during plugin activation.
  *
@@ -16,9 +11,16 @@ use Aws\DynamoDb\Marshaler;
  * @author     Alex Ghirelli <info@alexghirelli.it>
  */
 
+require plugin_dir_path( dirname( __FILE__ ) ) . '/vendor/autoload.php';
+require plugin_dir_path( dirname( __FILE__ ) ) . '/utils/woocommerce.php';
+
+use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\DynamoDb\Marshaler;
+
 class Woo_Aws_DynamoDB {
     private $dynamodb;
     private $marshaler;
+    private $wooUtils;
 
     public function __construct($key, $secret, $region) {
         $sdk = new Aws\Sdk([
@@ -33,13 +35,17 @@ class Woo_Aws_DynamoDB {
         $this->dynamodb = $sdk->createDynamoDb();
 
         $this->marshaler = new Marshaler();
+        $this->wooUtils = new WooCommerceUtils();
     }
     
-	public function insertData($orderId) {
+	public function insert($orderId) {
+        $orderData = $this->wooUtils->getOrder($orderId);
+
+        var_dump($orderData);
 
         $params = [
             'TableName' => 'wc-orders',
-            'Item' => $this->_getOrderData($orderId)
+            'Item' => $this->marshaler->marshalJson(json_encode($orderData))
         ];
 
 
@@ -53,40 +59,11 @@ class Woo_Aws_DynamoDB {
         }
 	}
 
-    public function updateData($orderId) {
-        $this->_remove($orderId);
-        $this->insertData($orderId);
-    }
-
-
-
-    public function _remove($orderId) {
-        
-        $params = [
-            'TableName' => 'wc-orders',
-            'Key' => $this->marshaler->marshalJson('
-                {
-                    "id": ' . $orderId . '
-                }
-            ')
-        ];
-
-
-        try {
-            $this->dynamodb->deleteItem($params);
-            echo "Deleted item.\n";
-
-        } catch (DynamoDbException $e) {
-            echo "Unable to delete item:\n";
-            echo $e->getMessage() . "\n";
-        }
-    }
-
-    public function getExportableOrders() {
+    public function fetch() {
         $orders = [];
         $eav = $this->marshaler->marshalJson('
             {
-                ":yyyy-mm-dd": 2021-10-11 ,
+                ":yyyy-mm-dd": 2021-10-11,
                 ":status": on-hold
             }
         ');
@@ -113,12 +90,30 @@ class Woo_Aws_DynamoDB {
         return $orders;
     }
 
-    private function _getOrderData($orderId) {
-        $order = wc_get_order( $orderId );
+    public function update($orderId) {
+        $this->_remove($orderId);
+        $this->insert($orderId);
+    }
 
-        $order_data = $order->get_data();
-        $order_data['date'] = date("Y-m-d", strtotime($order->get_date_created()));
+    public function _remove($orderId) {
+        
+        $params = [
+            'TableName' => 'wc-orders',
+            'Key' => $this->marshaler->marshalJson('
+                {
+                    "id": ' . $orderId . '
+                }
+            ')
+        ];
 
-        return $this->marshaler->marshalJson(json_encode($order_data));
+
+        try {
+            $this->dynamodb->deleteItem($params);
+            echo "Deleted item.\n";
+
+        } catch (DynamoDbException $e) {
+            echo "Unable to delete item:\n";
+            echo $e->getMessage() . "\n";
+        }
     }
 }

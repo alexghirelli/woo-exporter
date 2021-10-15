@@ -26,6 +26,7 @@ services:
        WORDPRESS_DB_USER: wordpress
        WORDPRESS_DB_PASSWORD: wordpress
        WORDPRESS_DB_NAME: wordpress
+       WORDPRESS_DEBUG: 'true'
        WORDPRESS_CONFIG_EXTRA: |
         define('AWS_KEY', ${AWS_KEY} );
         define('AWS_SECRET', ${AWS_SECRET});

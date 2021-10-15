@@ -12,7 +12,6 @@
  */
 
 require plugin_dir_path( dirname( __FILE__ ) ) . '/vendor/autoload.php';
-require plugin_dir_path( dirname( __FILE__ ) ) . '/utils/woocommerce.php';
 
 use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\Marshaler;
@@ -41,8 +40,6 @@ class Woo_Aws_DynamoDB {
 	public function insert($orderId) {
         $orderData = $this->wooUtils->getOrder($orderId);
 
-        var_dump($orderData);
-
         $params = [
             'TableName' => 'wc-orders',
             'Item' => $this->marshaler->marshalJson(json_encode($orderData))
@@ -59,27 +56,27 @@ class Woo_Aws_DynamoDB {
         }
 	}
 
-    public function fetch() {
+    public function fetch($dateFrom, $dateTo) {
         $orders = [];
-        $eav = $this->marshaler->marshalJson('
-            {
-                ":yyyy-mm-dd": 2021-10-11,
-                ":status": on-hold
-            }
-        ');
+
+        $jsonData = json_encode([
+            ":dateFrom" => date("Ymd", strtotime($dateFrom)),
+            ":dateTo" => date("Ymd", strtotime($dateTo))
+        ]);
+
+        $eav = $this->marshaler->marshalJson($jsonData);
 
         $params = [
             'TableName' => 'wc-orders',
-            'KeyConditionExpression' => '#dt = :yyyy-mm-dd and status = :status ',
-            'ExpressionAttributeNames'=> [ '#dt' => 'date' ],
+            'FilterExpression' => 'orderDate BETWEEN :dateFrom and :dateTo',
             'ExpressionAttributeValues'=> $eav
         ];
 
         try {
-            $result = $this->dynamodb->query($params);
+            $result = $this->dynamodb->scan($params);
 
             foreach ($result['Items'] as $item) {
-                array_push($orders, $item);
+                array_push($orders, $this->_beautify($item));
             }
 
         } catch (DynamoDbException $e) {
@@ -95,7 +92,7 @@ class Woo_Aws_DynamoDB {
         $this->insert($orderId);
     }
 
-    public function _remove($orderId) {
+    private function _remove($orderId) {
         
         $params = [
             'TableName' => 'wc-orders',
@@ -115,5 +112,9 @@ class Woo_Aws_DynamoDB {
             echo "Unable to delete item:\n";
             echo $e->getMessage() . "\n";
         }
+    }
+
+    private function _beautify($orderData) {
+        return $this->marshaler->unmarshalItem($orderData);
     }
 }

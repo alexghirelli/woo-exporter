@@ -23,7 +23,7 @@ class WooCommerceUtils {
         $order = wc_get_order( $orderId );
 
         $order_data = $order->get_data();
-        $order_data['date'] = date("Y-m-d", strtotime($order->get_date_created()));
+        $order_data['orderDate'] = date("Ymd", strtotime($order->get_date_created()));
 
         return $order_data;
     }

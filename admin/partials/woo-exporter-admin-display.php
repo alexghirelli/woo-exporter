@@ -18,10 +18,31 @@ function adminPageContent() {
     }
 	?>
 		<div class="woo-exporter-container">
-            <div class="date-select">
+            <h1>WooExporter</h1>
+            <h3>Esporta gli ordini di WooCommerce da DynamoDB con un click.</h3>
 
+            <div class="date-select">
+                <form action="<?php echo admin_url( 'admin-post.php' ); ?>">
+                    <input type="hidden" name="action" value="export">
+                    <input type="date" id="dateFrom" name="dateFrom">
+                    <input type="date" id="dateTo" name="dateTo">
+                    <?php submit_button( 'Export' ); ?>
+                </form>
             </div>
-            <button id="export">Export</button>
+
+            <br />
+            <br />
+            <br />
+
+            <h3>Sincronizza gli ordini di WooCommerce su DynamoDB con un click.</h3>
+            <div class="date-select">
+                <form action="<?php echo admin_url( 'admin-post.php' ); ?>">
+                    <input type="hidden" name="action" value="sync">
+                    <input type="date" id="dateFrom" name="dateFrom">
+                    <input type="date" id="dateTo" name="dateTo">
+                    <?php submit_button( 'Import' ); ?>
+                </form>
+            </div>
         </div>
 	<?php
 }

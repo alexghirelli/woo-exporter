@@ -20,7 +20,7 @@ class Woo_File_Generator {
     private $headers;
     private $fileType;
 
-    public function __construct($headers, $fileType = 'xlsx') {
+    public function __construct($headers = [], $fileType = 'xlsx') {
         $this->headers = $headers ?? [];
         $this->fileType = $fileType;
     }

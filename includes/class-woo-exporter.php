@@ -177,6 +177,7 @@ class Woo_Exporter {
 		// Add action for sync order and export
 		$this->loader->add_action( 'admin_post_export', $commands, 'exportOrders' );
 		$this->loader->add_action( 'admin_post_sync', $commands, 'syncOrders' );
+		$this->loader->add_action( 'admin_post_syncjson', $commands, 'syncOrdersFromJson' );
 
 	}
 

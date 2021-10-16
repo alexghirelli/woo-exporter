@@ -37,8 +37,12 @@ class Woo_Aws_DynamoDB {
         $this->wooUtils = new WooCommerceUtils();
     }
     
-	public function insert($orderId) {
-        $orderData = $this->wooUtils->getOrder($orderId);
+	public function insert($order, $dataType = 'orderId') {
+        $orderData = $dataType == 'orderId' ? $this->wooUtils->getOrder($order) : $order;
+
+        if ($dataType !== 'orderId') {
+            $orderData->{'orderDate'} = date("Ymd", strtotime($orderData->date_created));
+        }
 
         $params = [
             'TableName' => 'wc-orders',
@@ -87,9 +91,9 @@ class Woo_Aws_DynamoDB {
         return $orders;
     }
 
-    public function update($orderId) {
-        $this->_remove($orderId);
-        $this->insert($orderId);
+    public function update($order) {
+        $this->_remove($order['id']);
+        $this->insert($order);
     }
 
     private function _remove($orderId) {

@@ -13,45 +13,30 @@
 
 require plugin_dir_path( dirname( __FILE__ ) ) . '/vendor/autoload.php';
 
-use SimpleXLSXGen;
+use SimpleXLSXGen as SimpleXLSXGen;
 
 class Woo_File_Generator {
     private $xlsx;
-    private $headers;
     private $fileType;
 
-    public function __construct($headers = [], $fileType = 'xlsx') {
-        $this->headers = $headers ?? [];
+    public function __construct($fileType = 'xlsx') {
         $this->fileType = $fileType;
+        $this->xlsx = new SimpleXLSXGen();
     }
 
-    public function dataMap($orders) {
-        return [
-            $this->headers,
-            $orders
-        ];
-    }
-    
-	public function create($data)
-    {
+    public function save($orders) {
         switch($this->fileType) {
             case 'xlsx':
-                $this->xlsx = SimpleXLSXGen::fromArray($data);
-                break;
-        }
-    }
-
-    public function save() {
-        switch($this->fileType) {
-            case 'xlsx':
+                $this->xlsx->addSheet( $orders, 'orders' );
                 $this->xlsx->saveAs("export-orders-". date('Y-m-d:h:i:s') .".xlsx");
                 break;
         }
     }
 
-    public function download() {
+    public function download($orders) {
         switch($this->fileType) {
             case 'xlsx':
+                $this->xlsx->addSheet( $orders, 'orders' );
                 $this->xlsx->downloadAs("export-orders-". date('Y-m-d:h:i:s') .".xlsx");
                 break;
         }

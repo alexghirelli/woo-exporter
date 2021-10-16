@@ -35,8 +35,25 @@ class WooCommerceUtils {
 	 *
 	 * @since    1.0.0
 	 */
-	public function getOrders($startDate, $endDate) {
-        // TODO: implement get all orders data
+	public function getOrdersIds($startDate, $endDate) {
+        $ordersData = [];
+
+        $orders = wc_get_orders(array(
+            'limit'=>-1,
+            'type'=> 'shop_order',
+            'status'=> array('wc-processing', 'wc-on-hold'),
+            'date_created'=> $startDate .'...'. $endDate 
+            )
+        );
+
+        foreach($orders as $order) {
+            $data = $order->get_data();
+            array_push($ordersData, $data['id']);
+        }
+        
+        var_dump($ordersData);
+
+        return $ordersData;
     }
 
 }

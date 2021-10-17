@@ -169,7 +169,7 @@ class Woo_Exporter {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_thankyou', $dynamo, 'insert' );
-		$this->loader->add_action( 'woocommerce_update_order', $dynamo, 'update' );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $dynamo, 'update' );
 
 		// Register Sidebars
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'custom_menu' );

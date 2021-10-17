@@ -54,6 +54,7 @@ class Woo_Exporter_Commands {
 
         foreach($orders as $order) {
             $totalQuantity = 0;
+            
             foreach ($order['line_items'] as $item) {
                 $totalQuantity += $item['quantity'];
             }
@@ -63,7 +64,7 @@ class Woo_Exporter_Commands {
                 $order['total'],
                 $order['payment_method_title'],
                 $order['status'],
-                $order['date_created'],
+                $order['date_created']['date'],
                 $order['customer_note'],
                 $totalQuantity,
                 count($order['line_items']),
@@ -91,14 +92,10 @@ class Woo_Exporter_Commands {
         }
 
         $this->fileGenerator->download($dataToExport);
-
-        // $this->fileGenerator->
     }
 
     public function syncOrders() {
         $wooOrders = $this->wooUtils->getOrdersIds($_GET['dateFrom'], $_GET['dateTo']);
-
-        var_dump($wooOrders);
 
         foreach($wooOrders as $order) {
             $this->dynamoDb->insert($order);

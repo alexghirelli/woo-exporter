@@ -21,11 +21,7 @@ class WooCommerceUtils {
 	 */
 	public function getOrder($orderId) {
         $order = wc_get_order( $orderId );
-
-        $order_data = $order->get_data();
-        $order_data['orderDate'] = date("Ymd", strtotime($order->get_date_created()));
-
-        return $order_data;
+        return $this->_mapOrderData($order, $orderId);
     }
 
     /**
@@ -51,9 +47,36 @@ class WooCommerceUtils {
             array_push($ordersData, $data['id']);
         }
         
-        var_dump($ordersData);
-
         return $ordersData;
+    }
+
+    /**
+	 * Map order data
+	 *
+	 * Map all order data 
+	 *
+	 * @since    1.0.0
+	 */
+	private function _mapOrderData($order, $orderId) {
+        $order_data = $order->get_data();
+        $order_meta = get_post_meta($orderId);
+
+        foreach ($order->get_items() as $item ) {
+            $item_data    = $item->get_data();
+
+            $order_data['line_items'] = [];
+            $order_data['line_items'][] = [
+                'name' => $item_data['name'],
+                'quantity' => $item_data['quantity'],
+                'subtotal' => $item_data['subtotal'],
+                'total' => $item_data['total']
+            ];
+        }
+
+        $order_data['meta_data'] = $order_meta;
+        $order_data['orderDate'] = date("Ymd", strtotime($order_data['date_created']));
+        
+        return $order_data;
     }
 
 }

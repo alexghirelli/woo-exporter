@@ -77,7 +77,7 @@ class Woo_Exporter_Commands {
                 $order['shipping']['city'],
                 $order['shipping']['postcode'],
                 $order['shipping']['state'],
-                $order['meta_data'][0]['value'],
+                $order['meta_data']['_billing_myfield12'][0],
                 count($order['line_items']) > 0 ? $order['line_items'][0]['name'] : '',
                 count($order['line_items']) > 0 ? $order['line_items'][0]['quantity'] : '',
                 count($order['line_items']) > 1 ? $order['line_items'][1]['name'] : '',

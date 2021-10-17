@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.alexghirelli.it
- * @since             1.0.0
+ * @since             0.6.0
  * @package           Woo_Exporter
  *
  * @wordpress-plugin
  * Plugin Name:       Woo Exporter (with AWS)
  * Plugin URI:        https://www.alexghirelli.it/woo-exporter
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Description:       This plugin is useful to cache orders data into DynamoDB and export them form it. This approach increase export speed and reduce WooCommerce server load time.
+ * Version:           0.6.0
  * Author:            Alex Ghirelli
  * Author URI:        https://www.alexghirelli.it
  * License:           GPL-2.0+
@@ -32,10 +32,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Start at version 0.6.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WOO_EXPORTER_VERSION', '1.0.0' );
+define( 'WOO_EXPORTER_VERSION', '0.6.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -71,7 +71,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-woo-exporter.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.6.0
  */
 function run_woo_exporter() {
 

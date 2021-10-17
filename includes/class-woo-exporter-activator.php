@@ -4,7 +4,7 @@
  * Fired during plugin activation
  *
  * @link       https://www.alexghirelli.it
- * @since      1.0.0
+ * @since      0.6.0
  *
  * @package    Woo_Exporter
  * @subpackage Woo_Exporter/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.0
+ * @since      0.6.0
  * @package    Woo_Exporter
  * @subpackage Woo_Exporter/includes
  * @author     Alex Ghirelli <info@alexghirelli.it>
@@ -27,7 +27,7 @@ class Woo_Exporter_Activator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    0.6.0
 	 */
 	public static function activate() {
 

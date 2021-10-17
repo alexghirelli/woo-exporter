@@ -4,7 +4,7 @@
  * Exporter Commands
  *
  *
- * @since      1.0.0
+ * @since      0.6.0
  * @package    Woo_Exporter
  * @subpackage Woo_Exporter/includes
  * @author     Alex Ghirelli <info@alexghirelli.it>

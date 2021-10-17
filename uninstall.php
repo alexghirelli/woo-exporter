@@ -20,7 +20,7 @@
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       https://www.alexghirelli.it
- * @since      1.0.0
+ * @since      0.6.0
  *
  * @package    Woo_Exporter
  */

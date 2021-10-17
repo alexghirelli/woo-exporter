@@ -7,7 +7,7 @@
  * so that it is ready for translation.
  *
  * @link       https://www.alexghirelli.it
- * @since      1.0.0
+ * @since      0.6.0
  *
  * @package    Woo_Exporter
  * @subpackage Woo_Exporter/includes
@@ -19,7 +19,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @since      1.0.0
+ * @since      0.6.0
  * @package    Woo_Exporter
  * @subpackage Woo_Exporter/includes
  * @author     Alex Ghirelli <info@alexghirelli.it>
@@ -30,7 +30,7 @@ class Woo_Exporter_i18n {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    1.0.0
+	 * @since    0.6.0
 	 */
 	public function load_plugin_textdomain() {
 

@@ -23,11 +23,14 @@ This plugin is useful to cache orders data into DynamoDB and export them form it
 
 Please add this rule to wp_config.php
 
-`define('AWS_KEY', ${AWS_KEY} );`
-`define('AWS_SECRET', ${AWS_SECRET});`
+`define('AWS_KEY', 'AKIATB5RVG2LXO7R6ZBN' );`
+`define('AWS_SECRET', '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');`
 
 
 # Changelog
 
+### 0.6
+Improvement: new order data mapping
+Fix: order data save to DynamoDB
 ### 0.5
 This version is a first beta. It can sync orders from WooCommerce, from JSON structure and export into XLSX.

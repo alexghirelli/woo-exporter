@@ -6,7 +6,7 @@
  * This file is used to markup the admin-facing aspects of the plugin.
  *
  * @link       https://www.alexghirelli.it
- * @since      1.0.0
+ * @since      0.6.0
  *
  * @package    Woo_Exporter
  * @subpackage Woo_Exporter/admin/partials

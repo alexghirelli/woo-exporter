@@ -4,7 +4,7 @@
  * WooCommerce utils functions
  *
  * @link       https://www.alexghirelli.it
- * @since      1.0.0
+ * @since      0.6.0
  *
  * @package    Woo_Exporter
  * @subpackage Woo_Exporter/includes
@@ -17,7 +17,7 @@ class WooCommerceUtils {
 	 *
 	 * Get all data of a specific order given its order ID
 	 *
-	 * @since    1.0.0
+	 * @since    0.6.0
 	 */
 	public function getOrder($orderId) {
         $order = wc_get_order( $orderId );
@@ -29,7 +29,7 @@ class WooCommerceUtils {
 	 *
 	 * Get all data of orders given start and end date
 	 *
-	 * @since    1.0.0
+	 * @since    0.6.0
 	 */
 	public function getOrdersIds($startDate, $endDate) {
         $ordersData = [];
@@ -55,7 +55,7 @@ class WooCommerceUtils {
 	 *
 	 * Map all order data 
 	 *
-	 * @since    1.0.0
+	 * @since    0.6.0
 	 */
 	private function _mapOrderData($order, $orderId) {
         $order_data = $order->get_data();

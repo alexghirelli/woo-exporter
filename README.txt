@@ -22,5 +22,8 @@ Please add this rule to wp_config.php
 
 == Changelog ==
 
+= 0.6 =
+Improvement: new order data mapping
+Fix: order data save to DynamoDB
 = 0.5 =
 This version is a first beta. It can sync orders from WooCommerce, from JSON structure and export into XLSX.

@@ -46,9 +46,8 @@ class Woo_Aws_DynamoDB {
 
         $params = [
             'TableName' => 'wc-orders',
-            'Item' => $this->marshaler->marshalJson(json_encode($orderData))
+            'Item' => $this->marshaler->marshalJson(json_encode($orderData, JSON_PRETTY_PRINT))
         ];
-
 
         try {
             $result = $this->dynamodb->putItem($params);
@@ -91,9 +90,9 @@ class Woo_Aws_DynamoDB {
         return $orders;
     }
 
-    public function update($order) {
-        $this->_remove($order['id']);
-        $this->insert($order);
+    public function update($orderId) {
+        $this->_remove($orderId);
+        $this->insert($orderId);
     }
 
     private function _remove($orderId) {

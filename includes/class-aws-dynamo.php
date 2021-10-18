@@ -59,9 +59,7 @@ class Woo_Aws_DynamoDB {
         }
 	}
 
-    public function fetch($dateFrom, $dateTo) {
-        $orders = [];
-
+    public function fetch($dateFrom, $dateTo, $lastEvaluatedKey = null) {
         $jsonData = json_encode([
             ":dateFrom" => date("Ymd", strtotime($dateFrom)),
             ":dateTo" => date("Ymd", strtotime($dateTo))
@@ -75,19 +73,16 @@ class Woo_Aws_DynamoDB {
             'ExpressionAttributeValues'=> $eav
         ];
 
+        if ($lastEvaluatedKey) {
+            $params['ExclusiveStartKey'] = $lastEvaluatedKey;
+        }
+
         try {
-            $result = $this->dynamodb->scan($params);
-
-            foreach ($result['Items'] as $item) {
-                array_push($orders, $this->_beautify($item));
-            }
-
+            return $this->dynamodb->scan($params);
         } catch (DynamoDbException $e) {
             echo "Unable to query:\n";
             echo $e->getMessage() . "\n";
         }
-
-        return $orders;
     }
 
     public function update($orderId) {
@@ -115,9 +110,5 @@ class Woo_Aws_DynamoDB {
             echo "Unable to delete item:\n";
             echo $e->getMessage() . "\n";
         }
-    }
-
-    private function _beautify($orderData) {
-        return $this->marshaler->unmarshalItem($orderData);
     }
 }

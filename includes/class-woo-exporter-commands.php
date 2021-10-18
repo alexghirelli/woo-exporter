@@ -14,11 +14,47 @@ class Woo_Exporter_Commands {
     public function __construct($dynamoDb) {
         $this->dynamoDb = $dynamoDb;
         $this->wooUtils = new WooCommerceUtils();
+        $this->dynamoUtils = new DynamoUtils();
         $this->fileGenerator = new Woo_File_Generator();
+        $this->lastKey = null;
+        $this->orders = [];
     }
 
     public function exportOrders() {
-        $orders = $this->dynamoDb->fetch($_GET['dateFrom'], $_GET['dateTo']);
+        do {
+            $ordersData = $this->dynamoDb->fetch($_GET['dateFrom'], $_GET['dateTo'], $this->lastKey);
+            $this->lastKey = $ordersData['LastEvaluatedKey'];
+            
+            foreach ($ordersData['Items'] as $item) {
+                $newItem = $this->dynamoUtils->beautify($item);
+                $this->orders[] = $newItem;
+            }
+        } while ( $this->lastKey != null);
+        
+        $dataToExport = $this->_xlsxMap();
+        $this->fileGenerator->download($dataToExport);
+    }
+
+    public function syncOrders() {
+        $wooOrders = $this->wooUtils->getOrdersIds($_GET['dateFrom'], $_GET['dateTo']);
+
+        foreach($wooOrders as $order) {
+            $this->dynamoDb->insert($order);
+        }
+    }
+
+    public function syncOrdersFromJson() {
+        if ( isset ( $_POST ) ) {
+            $jsonOrders = json_decode(stripslashes($_POST['json']));
+
+            foreach($jsonOrders as $order) {
+                $this->dynamoDb->insert($order, 'json');
+            }
+        }   
+    }
+
+    private function _xlsxMap()
+    {
         $dataToExport = [
             [
                 "Order ID",
@@ -52,7 +88,7 @@ class Woo_Exporter_Commands {
             ]
         ];
 
-        foreach($orders as $order) {
+        foreach($this->orders as $order) {
             $totalQuantity = 0;
             
             foreach ($order['line_items'] as $item) {
@@ -91,24 +127,6 @@ class Woo_Exporter_Commands {
             ];
         }
 
-        $this->fileGenerator->download($dataToExport);
-    }
-
-    public function syncOrders() {
-        $wooOrders = $this->wooUtils->getOrdersIds($_GET['dateFrom'], $_GET['dateTo']);
-
-        foreach($wooOrders as $order) {
-            $this->dynamoDb->insert($order);
-        }
-    }
-
-    public function syncOrdersFromJson() {
-        if ( isset ( $_POST ) ) {
-            $jsonOrders = json_decode(stripslashes($_POST['json']));
-
-            foreach($jsonOrders as $order) {
-                $this->dynamoDb->insert($order, 'json');
-            }
-        }   
+        return $dataToExport;
     }
 }

@@ -16,8 +16,8 @@ This plugin is useful to cache orders data into DynamoDB and export them from it
 
 Please add this rule to wp_config.php
 
-`define('AWS_KEY', ${AWS_KEY} );`
-`define('AWS_SECRET', ${AWS_SECRET});`
+`define('AWS_KEY', AWS_KEY );`
+`define('AWS_SECRET', AWS_SECRET);`
 
 
 == Changelog ==

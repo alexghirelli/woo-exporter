@@ -22,6 +22,8 @@ Please add this rule to wp_config.php
 
 == Changelog ==
 
+= 0.7 =
+Fix: DynamoDB was retrieving a limited set of data. Now we get all data given two dates.
 = 0.6 =
 Improvement: new order data mapping
 Fix: order data save to DynamoDB

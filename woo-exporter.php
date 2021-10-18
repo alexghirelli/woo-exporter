@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.alexghirelli.it
- * @since             0.6.0
+ * @since             0.5.0
  * @package           Woo_Exporter
  *
  * @wordpress-plugin
  * Plugin Name:       Woo Exporter (with AWS)
  * Plugin URI:        https://www.alexghirelli.it/woo-exporter
- * Description:       This plugin is useful to cache orders data into DynamoDB and export them form it. This approach increase export speed and reduce WooCommerce server load time.
- * Version:           0.6.0
+ * Description:       This plugin is useful to cache orders data into DynamoDB and export them from it.
+ * Version:           0.7.0
  * Author:            Alex Ghirelli
  * Author URI:        https://www.alexghirelli.it
  * License:           GPL-2.0+

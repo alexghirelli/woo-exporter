@@ -118,6 +118,8 @@ class Woo_Exporter {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-file-generator.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'utils/woocommerce.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'utils/dynamo.php';
 	
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
@@ -168,7 +170,7 @@ class Woo_Exporter {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'woocommerce_checkout_create_order', $dynamo, 'insert' );
+		$this->loader->add_action( 'woocommerce_new_order', $dynamo, 'insert' );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $dynamo, 'update' );
 
 		// Register Sidebars

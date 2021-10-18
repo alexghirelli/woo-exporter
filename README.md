@@ -17,7 +17,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description
 
-This plugin is useful to cache orders data into DynamoDB and export them form it. This approach increase export speed and reduce WooCommerce server load time.
+This plugin is useful to cache orders data into DynamoDB and export them from it. This approach increase export speed and reduce WooCommerce server load time.
 
 ## Installation
 

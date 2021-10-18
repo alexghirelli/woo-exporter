@@ -34,12 +34,13 @@ class WooCommerceUtils {
 	public function getOrdersIds($startDate, $endDate) {
         $ordersData = [];
 
-        $orders = wc_get_orders(array(
-            'limit'=>-1,
-            'type'=> 'shop_order',
-            'status'=> array('wc-processing', 'wc-on-hold'),
-            'date_created'=> $startDate .'...'. $endDate 
-            )
+        $orders = wc_get_orders(
+            [
+                'limit'=>-1,
+                'type'=> 'shop_order',
+                'status'=> ['wc-processing', 'wc-on-hold'],
+                'date_created'=> $startDate .'...'. $endDate 
+            ]
         );
 
         foreach($orders as $order) {

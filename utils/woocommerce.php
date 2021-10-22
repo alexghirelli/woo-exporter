@@ -60,23 +60,24 @@ class WooCommerceUtils {
 	 */
 	private function _mapOrderData($order, $orderId) {
         $order_data = $order->get_data();
+        $order_data['line_items'] = [];
         $order_meta = get_post_meta($orderId);
 
         foreach ($order->get_items() as $item ) {
-            $item_data    = $item->get_data();
+            $item_data = $item->get_data();
 
-            $order_data['line_items'] = [];
             $order_data['line_items'][] = [
                 'name' => $item_data['name'],
                 'quantity' => $item_data['quantity'],
                 'subtotal' => $item_data['subtotal'],
                 'total' => $item_data['total']
             ];
-        }
 
+        }
+        
         $order_data['meta_data'] = $order_meta;
         $order_data['orderDate'] = date("Ymd", strtotime($order_data['date_created']));
-        
+
         return $order_data;
     }
 

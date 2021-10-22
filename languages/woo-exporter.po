@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooExporter\n"
+"POT-Creation-Date: 2021-10-22 11:23+0200\n"
+"PO-Revision-Date: 2021-10-22 11:30+0200\n"
+"Last-Translator: \n"
+"Language-Team: info@alexghirelli.it\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: vendor\n"
+
+#: admin/partials/woo-exporter-admin-display.php:17
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: utils/woocommerce.php:62
+msgid "Pending"
+msgstr ""
+
+#: utils/woocommerce.php:66
+msgid "Processing"
+msgstr ""
+
+#: utils/woocommerce.php:70
+msgid "On hold"
+msgstr ""
+
+#: utils/woocommerce.php:74
+msgid "Completed"
+msgstr ""
+
+#: utils/woocommerce.php:78
+msgid "Cancelled"
+msgstr ""
+
+#: utils/woocommerce.php:82
+msgid "Refunded"
+msgstr ""
+
+#: utils/woocommerce.php:86
+msgid "Failed"
+msgstr ""

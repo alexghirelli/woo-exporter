@@ -110,7 +110,7 @@ class Woo_Exporter_Commands {
                 $order['billing']['email'],
                 $order['shipping']['first_name'] . " " . $order['shipping']['last_name'],                
                 $order['shipping']['company'],
-                $order['shipping']['address_1'],
+                $order['shipping']['address_1'] . " " . $order['shipping']['address_2'],
                 $order['shipping']['city'],
                 $order['shipping']['postcode'],
                 $order['shipping']['state'],

@@ -28,7 +28,7 @@ services:
        WORDPRESS_DB_NAME: wordpress
        WORDPRESS_DEBUG: 'true'
        WORDPRESS_CONFIG_EXTRA: |
-        define('AWS_KEY', ${AWS_KEY} );
-        define('AWS_SECRET', ${AWS_SECRET});
+        define('AWS_KEY', "${AWS_KEY}" );
+        define('AWS_SECRET', "${AWS_SECRET}" );
 volumes:
   db_data: {}

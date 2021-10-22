@@ -90,6 +90,7 @@ class Woo_Exporter_Commands {
 
         foreach($this->orders as $order) {
             $totalQuantity = 0;
+            $orderStatus = $this->wooUtils->translateOrderStatus($order['status']);
             
             foreach ($order['line_items'] as $item) {
                 $totalQuantity += $item['quantity'];
@@ -99,7 +100,7 @@ class Woo_Exporter_Commands {
                 $order['id'],
                 $order['total'],
                 $order['payment_method_title'],
-                $order['status'],
+                $orderStatus,
                 $order['date_created']['date'],
                 $order['customer_note'],
                 $totalQuantity,

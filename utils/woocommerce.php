@@ -52,6 +52,43 @@ class WooCommerceUtils {
     }
 
     /**
+	 * Translate order status
+	 *
+	 * @since    0.7.1
+	 */
+	public function translateOrderStatus($wcOrderStatus) {
+        switch ($wcOrderStatus) {
+            case 'pending':
+                return __( 'Pending', 'woo-exporter' );
+                break;
+
+            case 'processing':
+                return __( 'Processing', 'woo-exporter' );
+                break;
+
+            case 'on-hold':
+                return __( 'On hold', 'woo-exporter' );
+                break;
+
+            case 'completed':
+                return __( 'Completed', 'woo-exporter' );
+                break;
+
+            case 'cancelled':
+                return __( 'Cancelled', 'woo-exporter' );
+                break;
+
+            case 'refunded':
+                return __( 'Refunded', 'woo-exporter' );
+                break;
+
+            case 'failed':
+                return __( 'Failed', 'woo-exporter' );
+                break;
+        }
+    }
+
+    /**
 	 * Map order data
 	 *
 	 * Map all order data 

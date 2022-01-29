@@ -15,7 +15,7 @@ services:
    wordpress:
      depends_on:
        - db
-     image: wordpress:latest
+     image: andreccosta/wordpress-xdebug
      ports:
        - "8200:80"
      volumes:
@@ -27,8 +27,11 @@ services:
        WORDPRESS_DB_PASSWORD: wordpress
        WORDPRESS_DB_NAME: wordpress
        WORDPRESS_DEBUG: 'true'
+       XDEBUG_MODE: debug
+       XDEBUG_CONFIG: start_with_request=yes client_host=host.docker.internal client_port=9000
        WORDPRESS_CONFIG_EXTRA: |
         define('AWS_KEY', "${AWS_KEY}" );
         define('AWS_SECRET', "${AWS_SECRET}" );
+
 volumes:
   db_data: {}

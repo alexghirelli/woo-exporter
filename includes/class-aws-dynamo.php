@@ -20,6 +20,7 @@ class Woo_Aws_DynamoDB {
     private $dynamodb;
     private $marshaler;
     private $wooUtils;
+    private $refreshCount = 0;
 
     public function __construct($key, $secret, $region) {
         $sdk = new Aws\Sdk([
@@ -88,6 +89,11 @@ class Woo_Aws_DynamoDB {
     public function update($orderId) {
         $this->_remove($orderId);
         $this->insert($orderId);
+
+        if ($this->refreshCount > 1) {
+            $this->update($orderId);
+            $this->refreshCount++;
+        }
     }
 
     private function _remove($orderId) {

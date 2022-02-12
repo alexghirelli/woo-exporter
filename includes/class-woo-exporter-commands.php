@@ -96,6 +96,8 @@ class Woo_Exporter_Commands {
                 $totalQuantity += $item['quantity'];
             }
 
+            $invoice = strpos($order['customer_note'], 'FATTURA') ? 'SI' : 'NO';
+
             $dataToExport[] = [
                 $order['id'],
                 $order['total'],
@@ -114,7 +116,7 @@ class Woo_Exporter_Commands {
                 $order['shipping']['city'],
                 $order['shipping']['postcode'],
                 $order['shipping']['state'],
-                $order['meta_data']['_billing_myfield12'][0],
+                $invoice,
                 count($order['line_items']) > 0 ? $order['line_items'][0]['name'] : '',
                 count($order['line_items']) > 0 ? $order['line_items'][0]['quantity'] : '',
                 count($order['line_items']) > 1 ? $order['line_items'][1]['name'] : '',

@@ -108,8 +108,6 @@ class Woo_Aws_DynamoDB {
 
         try {
             $this->dynamodb->deleteItem($params);
-            echo "Deleted item.\n";
-
         } catch (DynamoDbException $e) {
             echo "Unable to delete item:\n";
             echo $e->getMessage() . "\n";

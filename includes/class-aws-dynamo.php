@@ -51,9 +51,7 @@ class Woo_Aws_DynamoDB {
         ];
 
         try {
-            $result = $this->dynamodb->putItem($params);
-            echo "result: $result";
-
+            $this->dynamodb->putItem($params);
         } catch (DynamoDbException $e) {
             echo "Unable to add item:\n";
             echo $e->getMessage() . "\n";

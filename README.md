@@ -29,6 +29,8 @@ Please add this rule to wp_config.php
 
 # Changelog
 
+### 0.7.3
+Fix: Bad echo that break API JSON response and new invoice data searched into customer_note
 ### 0.7
 Fix: DynamoDB was retrieving a limited set of data. Now we get all data given two dates.
 ### 0.6
